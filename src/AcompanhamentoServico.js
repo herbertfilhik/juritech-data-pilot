@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, Input } from 'antd';
+import { Link } from 'react-router-dom';
+import './components/AcompanhamentoServico.css'; // Certifique-se de que o caminho está correto
 
 const AcompanhamentoServico = () => {
   const [dados, setDados] = useState([]);
@@ -213,8 +215,9 @@ const columns = [
   return (
     <div>
       <h1>Acompanhamento de Serviço</h1>
+      <Link to="/">Voltar à tela inicial</Link>
       <Input
-        placeholder="Filtrar por Controle Target"
+        placeholder="Filtrar por qualquer entrada"
         value={filtro}
         onChange={handleFilterChange}
       />
