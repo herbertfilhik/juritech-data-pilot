@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, Input } from 'antd';
 import { Link } from 'react-router-dom';
-import './components/AcompanhamentoServico.css'; // Certifique-se de que o caminho está correto
+import './AcompanhamentoServico.css';
 
 const AcompanhamentoServico = () => {
   const [dados, setDados] = useState([]);
@@ -212,10 +212,14 @@ const columns = [
     setFiltro(e.target.value);
   };
 
+  const getRowClassName = (record) => {
+    return record.status === 'CONCLUIDO' ? 'row-concluido' : 'row-outro-status';
+  };
+
   return (
-    <div>
+    <div className="acompanhamentoServico"> {/* Classe aplicada ao div container */}
       <h1>Acompanhamento de Serviço</h1>
-      <Link to="/">Voltar à tela inicial</Link>
+      <Link to="/" className="voltarLink">Voltar à tela inicial</Link> {/* Classe aplicada ao Link */}
       <Input
         placeholder="Filtrar por qualquer entrada"
         value={filtro}
@@ -225,9 +229,10 @@ const columns = [
         dataSource={dados}
         columns={columns}
         loading={loading}
+        rowClassName={getRowClassName}
       />
     </div>
-  );
+  );  
 };
 
 export default AcompanhamentoServico;

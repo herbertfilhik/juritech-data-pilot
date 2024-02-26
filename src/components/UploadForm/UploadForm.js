@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './components/UploadForm.css';
+import '../UploadForm/UploadForm.css';
 
 function UploadForm() {
   const [file, setFile] = useState(null);

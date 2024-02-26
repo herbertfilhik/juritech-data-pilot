@@ -1,8 +1,12 @@
+/* UploadForm.css */
 .upload-form {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
+    background-color: #f4f4f4; 
+    color: #333;
+    height: 100vh;
   }
   
   .upload-form input[type="file"] {
@@ -33,7 +37,7 @@
   .upload-form {
     display: flex;
     align-items: center; /* Alinha verticalmente, se necessário */
-    justify-content: start; /* Alinha os itens ao início do contêiner */
+    justify-content: flex-start; /* Alinha os itens ao início do contêiner */
     gap: 10px; /* Espaço entre os botões */
   }
   
