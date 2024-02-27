@@ -10,6 +10,7 @@ function Home() {
       <Link to="/upload" className="btn btn-primary link-vertical">Realizar Upload da Operação</Link>
       <Link to="/fluxo" className="btn btn-primary link-vertical">Acompanhar Serviço</Link>
       <Link to="/excluiracompservico" className="btn btn-primary link-vertical">Excluir Tabela da Operação</Link>
+      <Link to="/logout" className="btn btn-primary link-vertical">Logout</Link>
     </div>
   );
 }

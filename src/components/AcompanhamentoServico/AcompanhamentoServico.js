@@ -11,7 +11,7 @@ const AcompanhamentoServico = () => {
   const [loading, setLoading] = useState(false);
 
   // Função para buscar dados filtrados
-  const buscarDadosFiltrados = async (filtro = '2.023.003') => {
+  const buscarDadosFiltrados = async (filtro) => {
     setLoading(true);
     try {
       const response = await axios.get(`http://localhost:3001/api/acompanhamentoServico?filtro=${filtro}`);
