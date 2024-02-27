@@ -1,3 +1,4 @@
+// ExcluirTabelaOperacao.js Front
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ExcluirTabelaOperacao.css';
@@ -10,25 +11,22 @@ const ExcluirTabelaOperacao = ({ setDados }) => {
   const abrirModal = () => setModalVisivel(true);
   const fecharModal = () => setModalVisivel(false);
 
-const confirmarExclusao = async () => {
-  try {
-    const response = await axios.delete('http://localhost:3001/api/documentos');
-    if (response.status === 200) {
-      alert(response.data); // ou uma mensagem de sucesso personalizada
-      setDados([]); // Limpa os dados no estado local
-    } else if (response.status === 404) {
-      alert(response.data); // ou uma mensagem personalizada para quando não há dados
+  const confirmarExclusao = async () => {
+    try {
+      const response = await axios.delete('http://localhost:3001/api/documentos');
+      alert(response.data);
+      setDados([]);
+      navigate('/');
+    } catch (error) {      
+      if (error.response && error.response.status === 404) {
+        alert(error.response.data);
+      } else {
+        // Pode ser um erro de rede ou algo que impediu a resposta de chegar
+        //console.error("Erro ao excluir documentos front:", error);
+        //alert("Erro ao excluir documentos ou verificar a conexão de rede front.");
+      }
     }
-    navigate('/'); // Redireciona para a tela inicial após a exclusão
-  } catch (error) {
-    if (error.response && error.response.status === 404) {
-      alert(error.response.data); // Mensagem para quando não há dados para excluir
-    } else {
-      console.error("Erro ao excluir documentos:", error);
-      alert("Erro ao excluir documentos."); // ou uma mensagem de erro personalizada
-    }
-  }
-};
+  };
 
   return (
     <div className="excluir-tabela-operacao">
