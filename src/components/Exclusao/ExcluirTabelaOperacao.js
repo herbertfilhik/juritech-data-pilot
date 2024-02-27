@@ -30,6 +30,7 @@ const ExcluirTabelaOperacao = ({ setDados }) => {
 
   return (
     <div className="excluir-tabela-operacao">
+      <h1>Excluir Tabela de Operação de Serviço</h1>
       <button onClick={abrirModal}>
         Excluir Dados da Tabela
       </button>

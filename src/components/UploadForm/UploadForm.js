@@ -44,7 +44,7 @@ function UploadForm() {
         console.log("Status da resposta:", response.status);
         alert('Upload bem-sucedido!');
         console.log('Resposta do servidor:', data);
-        navigate('/caminhoParaOndeIrAposUpload'); // Ajuste conforme necessário
+        navigate('/upload'); // Ajuste conforme necessário
       } else if (response.status === 400) {
         // Supondo que o servidor retorne status 400 para arquivos já processados
         const errorData = await response.json();
