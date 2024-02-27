@@ -2,33 +2,31 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
-function Login({ onLogin }) {
+function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Hook para navegação
 
-  const handleSubmit = async (event) => {    
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      const response = await fetch('http://localhost:3001/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      });
 
-      const data = await response.json();
+    // Supondo que esta é a chamada API que retorna o token
+    const response = await fetch('http://localhost:3001/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
+    });
 
-      if (response.ok) {
-        console.log('Login bem-sucedido:', data);
-        navigate('/'); // Redireciona para a página inicial
-      } else {
-        alert(data.message || 'Falha no login');
-      }
-    } catch (error) {
-      console.error('Erro ao fazer login:', error);
-      alert('Erro ao conectar ao servidor');
+    const data = await response.json();
+
+    if (response.ok) {
+      console.log('Login bem-sucedido:', data);
+      localStorage.setItem('token', data.token); // Armazena o token no localStorage
+      navigate('/'); // Redireciona para a página inicial
+    } else {
+      alert(data.message || 'Falha no login');
     }
   };
 

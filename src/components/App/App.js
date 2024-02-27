@@ -6,19 +6,21 @@ import AcompanhamentoServico from '../AcompanhamentoServico/AcompanhamentoServic
 import ExcluirTabelaOperacao from '../Exclusao/ExcluirTabelaOperacao.js'; // Ajuste para o caminho correto
 import Login from '../Login/Login.js';
 import Logout from '../Logout/Logout.js';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.js'
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/upload" element={<UploadForm />} />
-        <Route path="/fluxo" element={<AcompanhamentoServico />} />
-        <Route path="/excluiracompservico" element={<ExcluirTabelaOperacao />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/logout" element={<Logout />} />
-
-        {/* Defina outras rotas conforme necessário */}
+        <Route path="/login" element={<Login />} />        
+        <Route element={<ProtectedRoute />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/upload" element={<UploadForm />} />
+          <Route path="/fluxo" element={<AcompanhamentoServico />} />
+          <Route path="/excluiracompservico" element={<ExcluirTabelaOperacao />} />        
+          <Route path="/logout" element={<Logout />} />
+          {/* Defina outras rotas conforme necessário */}
+        </Route>
       </Routes>
     </Router>
   );
