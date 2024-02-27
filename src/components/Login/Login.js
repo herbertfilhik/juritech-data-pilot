@@ -1,16 +1,35 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
 function Login({ onLogin }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {    
     event.preventDefault();
-    // Aqui você pode integrar a lógica para autenticação
-    // Por exemplo: onLogin(username, password);
-    console.log('Login tentado com:', username, password);
-    // Substitua o console.log acima pela chamada da sua função de login
+    try {
+      const response = await fetch('http://localhost:3001/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log('Login bem-sucedido:', data);
+        navigate('/'); // Redireciona para a página inicial
+      } else {
+        alert(data.message || 'Falha no login');
+      }
+    } catch (error) {
+      console.error('Erro ao fazer login:', error);
+      alert('Erro ao conectar ao servidor');
+    }
   };
 
   return (
