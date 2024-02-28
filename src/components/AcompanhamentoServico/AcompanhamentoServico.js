@@ -54,9 +54,9 @@ const AcompanhamentoServico = () => {
   };
 
   // Efeito para buscar dados quando o componente é montado
-  useEffect(() => {
+  /*useEffect(() => {
     buscarDadosFiltrados(filtro);
-  }, []);
+  }, []);*/
 
   // Efeito para buscar dados quando o valor do filtro muda
   useEffect(() => {
