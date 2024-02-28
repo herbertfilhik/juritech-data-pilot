@@ -1,3 +1,4 @@
+/* Estilos específicos para o container de login, com uma estética moderna e elegante */
 .login-container {
   display: flex;
   flex-direction: column;
@@ -5,44 +6,52 @@
   justify-content: center;
   height: 100vh;
   text-align: center;
-  background-color: #f4f4f4;
+  background: linear-gradient(135deg, #e6e6e6 30%, #f4f4f4 100%);
   color: #333;
 }
 
 .login-container form {
   background-color: #fff;
   padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 10px; /* Bordas mais arredondadas para um visual suave */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra mais proeminente para efeito de profundidade */
   width: 90%;
   max-width: 320px;
+  transition: transform 0.3s ease-in-out; /* Transição suave para efeitos interativos */
 }
 
 .login-container input {
   width: 100%;
-  padding: 10px;
+  padding: 15px; /* Mais espaço interno para uma melhor experiência de digitação */
   margin: 10px 0;
-  border-radius: 5px;
-  border: 1px solid #ddd;
+  border-radius: 8px; /* Bordas mais arredondadas */
+  border: 1px solid #ccc; /* Cor de borda mais suave */
   box-sizing: border-box;
+  transition: border-color 0.2s ease-in-out; /* Transição na cor da borda ao focar */
+}
+
+.login-container input:focus {
+  border-color: #007bff; /* Destaque no foco */
+  box-shadow: 0 0 0 2px rgba(0,123,255,.25); /* Sombra externa sutil no foco */
 }
 
 .login-container button {
   background-color: #0D6EFD;
   color: white;
-  padding: 10px 20px;
+  padding: 12px 20px; /* Ajuste no padding para um botão mais robusto */
   margin-top: 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px; /* Bordas mais arredondadas */
   cursor: pointer;
   font-size: 16px;
   width: 100%;
   box-sizing: border-box;
-  transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out; /* Transição suave no background e transform */
 }
 
 .login-container button:hover {
   background-color: #0B5ED7;
+  transform: translateY(-3px); /* Elevação sutil ao passar o mouse */
 }
 
 .login-container label {
@@ -50,9 +59,11 @@
   display: block;
   margin-top: 10px;
   color: #666;
+  font-size: 14px; /* Ajuste no tamanho da fonte para melhor legibilidade */
 }
 
 .login-container h2 {
   color: #333;
   margin-bottom: 20px;
+  font-size: 24px; /* Tamanho da fonte maior para destaque */
 }

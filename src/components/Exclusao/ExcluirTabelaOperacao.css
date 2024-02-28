@@ -1,3 +1,4 @@
+/* Estilos aprimorados para a operação de exclusão de tabela */
 .excluir-tabela-operacao {
   display: flex;
   flex-direction: column;
@@ -5,26 +6,28 @@
   justify-content: center;
   height: 100vh;
   text-align: center;
-  background-color: #f4f4f4;
+  background: linear-gradient(145deg, #e4e4e4, #f4f4f4); /* Suave gradiente para o fundo */
   color: #333;
 }
 
 .excluir-tabela-operacao button {
-  background-color: #0D6EFD;
+  background-color: #0D6EFD; /* Cor primária */
   color: white;
-  padding: 10px 20px;
+  padding: 12px 24px; /* Ajuste no padding para um visual mais robusto */
   margin-top: 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px; /* Bordas mais arredondadas */
   cursor: pointer;
   font-size: 16px;
-  transition: background-color 0.2s ease-in-out;
+  transition: transform 0.3s ease-in-out, background-color 0.2s; /* Transição suave para transform e cor de fundo */
 }
 
 .excluir-tabela-operacao button:hover {
-  background-color: #0B5ED7;
+  background-color: #0B5ED7; /* Cor de hover */
+  transform: scale(1.05); /* Efeito de crescimento ao passar o mouse */
 }
 
+/* Estilo aprimorado para a modal de confirmação */
 .modal-confirmacao {
   position: fixed;
   top: 50%;
@@ -32,8 +35,8 @@
   transform: translate(-50%, -50%);
   background-color: #ffffff;
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 10px; /* Bordas mais arredondadas */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra mais proeminente */
   z-index: 1000;
   width: 80%;
   max-width: 400px;
@@ -42,16 +45,17 @@
 .modal-confirmacao p {
   margin-bottom: 20px;
   color: #333;
+  font-size: 16px; /* Tamanho da fonte ajustado para melhor legibilidade */
 }
 
 .modal-confirmacao button {
-  padding: 10px 20px;
+  padding: 12px 24px; /* Mais espaço interno para um toque mais confortável */
   border: none;
-  border-radius: 4px;
+  border-radius: 6px; /* Bordas levemente mais arredondadas */
   cursor: pointer;
   font-size: 16px;
   margin-right: 10px;
-  transition: background-color 0.2s ease-in-out;
+  transition: opacity 0.2s ease-in-out; /* Transição suave para a opacidade */
 }
 
 .modal-confirmacao button:first-of-type {
@@ -61,8 +65,9 @@
 
 .modal-confirmacao button:last-of-type {
   background-color: #ccc;
+  color: #333; /* Melhora o contraste do texto */
 }
 
 .modal-confirmacao button:hover {
-  opacity: 0.9;
+  opacity: 0.8; /* Efeito sutil ao passar o mouse */
 }

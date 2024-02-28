@@ -1,43 +1,47 @@
-/* UploadForm.css */
+/* UploadForm.css - Estilo aprimorado para um visual moderno e limpo */
 .upload-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-    background-color: #f4f4f4; 
-    color: #333;
-    height: 100vh;
-  }
-  
-  .upload-form input[type="file"] {
-    margin: 20px 0;
-    padding: 10px;
-    border: 2px solid #0D6EFD; /* Cor azul, mas sinta-se livre para ajustar */
-    border-radius: 5px;
-  }
-  
-  .upload-form button {
-    background-color: #0D6EFD; /* Cor azul, ajustável */
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .upload-form button:hover {
-    background-color: #0B5ED7; /* Um azul um pouco mais escuro para o hover */
-  }
-  
-  .upload-form button {
-    margin-right: 10px; /* Adiciona um espaço entre os botões */
-  }
-  
-  .upload-form {
-    display: flex;
-    align-items: center; /* Alinha verticalmente, se necessário */
-    justify-content: flex-start; /* Alinha os itens ao início do contêiner */
-    gap: 10px; /* Espaço entre os botões */
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  background: linear-gradient(135deg, #e6e6e6 30%, #f4f4f4 100%); /* Gradiente suave para o fundo */
+  color: #333;
+  height: 100vh;
+  padding: 20px; /* Espaçamento interno para evitar que os elementos encostem nas bordas */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para adicionar profundidade */
+}
+
+.upload-form input[type="file"] {
+  margin: 20px 0;
+  padding: 15px; /* Aumento do padding para melhor toque */
+  border: 2px dashed #0D6EFD; /* Borda tracejada para um visual distinto */
+  border-radius: 10px; /* Bordas mais arredondadas */
+  outline: none; /* Remove o outline ao focar */
+  transition: border-color 0.3s ease-in-out; /* Suaviza a transição da cor da borda */
+  cursor: pointer; /* Indica que o elemento é clicável */
+}
+
+.upload-form input[type="file"]:hover {
+  border-color: #0B5ED7; /* Altera a cor da borda ao passar o mouse */
+}
+
+.upload-form button {
+  background-color: #0D6EFD;
+  color: white;
+  padding: 12px 24px; /* Botões maiores para uma presença mais notável */
+  border: none;
+  border-radius: 10px; /* Bordas mais arredondadas para um visual moderno */
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s, transform 0.2s; /* Animação suave para o background e transform */
+  margin: 0 10px 10px 0; /* Correção na margem para espaçamento adequado */
+}
+
+.upload-form button:hover {
+  background-color: #0B5ED7;
+  transform: translateY(-3px); /* Leve elevação ao passar o mouse para um feedback interativo */
+}
+
+.upload-form {
+  gap: 10px; /* Assegura espaçamento consistente entre os elementos */
+}

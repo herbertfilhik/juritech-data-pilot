@@ -1,4 +1,4 @@
-/* Estilos específicos para o componente Home */
+/* Estilos específicos para o componente Home, com uma pitada de modernidade */
 .home-container {
   display: flex;
   flex-direction: column;
@@ -9,13 +9,16 @@
   margin: 0;
   padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f4f4f4; 
+  background: linear-gradient(135deg, #f0f0f0 30%, #f4f4f4 100%);
   color: #333;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .home-container h1 {
   color: #333;
   margin-bottom: 30px;
+  font-size: 2.5em;
+  font-weight: bold;
 }
 
 .home-container .btn {
@@ -23,38 +26,43 @@
   padding: 10px 20px;
   margin: 10px;
   border: none;
-  border-radius: 5px;
+  border-radius: 50px; /* Borda mais arredondada */
   background-color: #007bff;
   color: white;
   text-decoration: none;
-  transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 123, 255, 0.3); /* Sombra suave */
 }
 
 .home-container .btn:hover {
   background-color: #0056b3;
-  transform: scale(1.05);
+  transform: translateY(-5px); /* Leve elevação ao passar o mouse */
 }
 
 .home-container .btn-primary {
-  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.5);
+  background-color: #0069d9; /* Um azul um pouco mais profundo */
+  box-shadow: 0 4px 6px rgba(0, 106, 217, 0.3);
 }
 
 .home-container .link-vertical {
   margin: 5px 0;
+  display: block; /* Garante que o link ocupe sua própria linha */
 }
 
-/* AcompanhamentoServico.css */
+/* AcompanhamentoServico.css - Estilizado para chamar mais atenção */
 .btn-limpar {
   padding: 10px 20px;
   margin-top: 20px;
-  background-color: #ff4d4f; /* Cor de destaque para o botão de apagar */
+  background-color: #ff4d4f; /* Cor de destaque */
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 50px; /* Bordas arredondadas */
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 6px rgba(255, 77, 79, 0.4); /* Sombra suave */
 }
 
 .btn-limpar:hover {
-  background-color: #ff7875; /* Cor mais clara no hover */
+  background-color: #ff7875; /* Suavização da cor ao passar o mouse */
+  transform: translateY(-5px); /* Leve elevação */
 }

@@ -1,24 +1,37 @@
+/* Estilização aprimorada para o container de logout */
 .logout-container {
   display: flex;
   flex-direction: column; /* Organiza os filhos em coluna */
-  justify-content: flex-start; /* Alinha os itens ao início do contêiner */
+  justify-content: center; /* Alinha os itens ao início do contêiner */
   align-items: center; /* Centraliza os itens horizontalmente */
   
   padding: 20px; /* Espaçamento interno */
+  background: linear-gradient(145deg, #e2eafc, #b6d1ff); /* Gradiente suave para o fundo */
+  border-radius: 10px; /* Bordas arredondadas para o container */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para adicionar profundidade */
+  width: 100%; /* Ajuste de largura conforme necessário */
+  max-width: 400px; /* Máximo de largura para não esticar demais em telas grandes */
+
+  /* Centraliza o container na tela */
+  position: absolute; /* Ou 'fixed', dependendo do contexto */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .logout-button {
   margin-top: auto; /* Empurra o botão para a parte inferior do contêiner */
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 12px 24px; /* Aumento no padding para um toque mais confortável */
+  font-size: 18px; /* Tamanho de fonte ligeiramente maior */
   color: #fff;
-  background-color: #007bff; /* Cor do botão, ajuste conforme necessário */
+  background-color: #005cbf; /* Cor do botão mais escura para contraste */
   border: none;
-  border-radius: 5px;
+  border-radius: 8px; /* Bordas mais arredondadas */
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Transição mais suave */
 }
 
 .logout-button:hover {
-  background-color: #007bff; /* Cor ao passar o mouse, ajuste conforme necessário */
+  background-color: #004b9e; /* Cor mais escura ao passar o mouse */
+  transform: translateY(-2px); /* Efeito de elevação leve para feedback interativo */
 }
