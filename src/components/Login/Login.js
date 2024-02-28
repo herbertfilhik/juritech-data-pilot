@@ -33,7 +33,7 @@ function Login() {
   return (
     <div className="login-container">
       <form onSubmit={handleSubmit} className="login-form">
-        <h2>Login Juritech</h2>
+        <h2>Login JuriTech</h2>
         <div className="form-group">
           <label htmlFor="username">Usuário</label>
           <input
