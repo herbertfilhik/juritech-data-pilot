@@ -13,7 +13,17 @@ const ExcluirTabelaOperacao = ({ setDados }) => {
 
   const confirmarExclusao = async () => {
     try {
-      const response = await axios.delete('http://localhost:3001/api/documentos');
+      // Recuperando o token do armazenamento local
+      const token = localStorage.getItem('token');
+  
+      // Incluindo o token no cabeçalho da requisição
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      };
+  
+      const response = await axios.delete('http://localhost:3001/api/documentos', config);
       alert(response.data);
       setDados([]);
       navigate('/');
