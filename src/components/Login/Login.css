@@ -67,3 +67,8 @@
   margin-bottom: 20px;
   font-size: 24px; /* Tamanho da fonte maior para destaque */
 }
+
+.login-title::after {
+  content: '⚖️';
+  margin-left: 10px;
+}
