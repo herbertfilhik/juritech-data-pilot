@@ -19,7 +19,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "node --openssl-legacy-provider node_modules/.bin/react-scripts build",
+    "build": "react-scripts start",
     "test": "echo \"No tests specified\" && exit 0",
     "eject": "react-scripts eject"
   },
