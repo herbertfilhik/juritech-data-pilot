@@ -218,7 +218,7 @@ const columns = [
 
   return (
     <div className="incluireExcluirOperacao"> {/* Classe aplicada ao div container */}
-      <h1>Acompanhamento de Serviço</h1>
+      <h1>Manutenção de Serviço</h1>
       <Link to="/" className="voltarLink">Voltar à tela inicial</Link> {/* Classe aplicada ao Link */}
       <Input
         placeholder="Filtrar por qualquer entrada"
