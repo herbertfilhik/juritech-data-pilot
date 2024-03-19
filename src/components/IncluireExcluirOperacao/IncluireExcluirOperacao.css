@@ -1,0 +1,75 @@
+/* IncluireExcluirOperacao.css - Estilos aprimorados para responsividade e visual moderno */
+
+/* Ajustes para telas menores */
+@media (max-width: 768px) {
+    .incluireExcluirOperacao {
+      padding: 20px; /* Espaçamento interno um pouco maior para melhor legibilidade */
+      max-width: 100%;
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f4; 
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave para adicionar profundidade */
+    }
+  }
+  
+  /* Reset específico para o componente */
+  .incluireExcluirOperacao * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Garante que padding e border não afetem a largura definida */
+  }
+  
+  /* Utilizando Flexbox para alinhar os itens verticalmente */
+  .incluireExcluirOperacao {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza horizontalmente */
+    justify-content: flex-start; /* Alinha itens para o topo */
+    background-color: #f4f4f4;
+    padding: 20px; /* Aumenta o padding para uma melhor apresentação */
+  }
+    
+  .incluireExcluirOperacao h1 {
+    color: #333;
+    margin-bottom: 30px; /* Espaçamento aumentado */
+    font-size: 24px; /* Tamanho da fonte aumentado para destaque */
+  }
+  
+  .incluireExcluirOperacao .voltarLink,
+  .incluireExcluirOperacao .btn {
+    margin-bottom: 20px; /* Espaçamento uniforme abaixo dos botões/links */
+    padding: 10px 15px; /* Ajuste no padding para melhor toque */
+    border-radius: 5px; /* Bordas arredondadas para um visual moderno */
+    transition: all 0.3s ease-in-out; /* Transição suave para interações */
+  }
+  
+  .incluireExcluirOperacao .voltarLink:hover,
+  .incluireExcluirOperacao .btn:hover {
+    background-color: #0056b3;
+    color: #ffffff;
+    transform: scale(1.05); /* Efeito de escala para feedback interativo */
+  }
+    
+  /* Ajustes na tabela para melhorar a legibilidade */
+  .ant-table-thead > tr > th {
+    background-color: #0056b3; /* Cor mais escura para o cabeçalho */
+    color: #fff; /* Texto claro para melhor contraste */
+  }
+  
+  .ant-table-tbody > tr > td {
+    color: #333;
+  }
+  
+  .ant-table-row:hover > td {
+    background-color: #f5f5f5; /* Cor de fundo mais sutil ao passar o mouse */
+  }
+    
+  /* Estilos específicos para o status das linhas */
+  .row-concluido td {
+    background-color: #e8f5e9; /* Um verde claro para indicar concluído */
+  }
+  
+  .row-outro-status td {
+    background-color: #fffde7; /* Um amarelo claro para outros status */
+  }
+  
