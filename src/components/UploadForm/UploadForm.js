@@ -32,7 +32,9 @@ function UploadForm() {
     formData.append('file', file);
 
     try {
-      const response = await fetch('http://localhost:3001/upload', {
+      //const response = await fetch('http://localhost:3001/upload', {
+      const response = await fetch('https://juritech-data-pilot-backend-8fc90525fb93.herokuapp.com/upload', {
+
         method: 'POST',
         body: formData,
       });
