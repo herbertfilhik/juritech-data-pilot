@@ -7,6 +7,9 @@ function UploadForm() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
+  const environment = process.env.ENVIRONMENT; // 'DEV' ou 'PRD'
+  const baseURL = environment === 'DEV' ? process.env.DEV : process.env.PRD;
+
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     const allowedTypes = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel'];
@@ -33,7 +36,9 @@ function UploadForm() {
 
     try {
       //const response = await fetch('http://localhost:3001/upload', {
-      const response = await fetch('https://juritech-data-pilot-backend-8fc90525fb93.herokuapp.com/upload', {
+      //const response = await fetch('https://juritech-data-pilot-backend-8fc90525fb93.herokuapp.com/upload', {
+      const response = await fetch(`${baseURL}/upload`, {  
+
 
         method: 'POST',
         body: formData,

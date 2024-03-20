@@ -10,12 +10,16 @@ const AcompanhamentoServico = () => {
   const [filtro, setFiltro] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const environment = process.env.ENVIRONMENT; // 'DEV' ou 'PRD'
+  const baseURL = environment === 'DEV' ? process.env.DEV : process.env.PRD;
+
   // Função para buscar dados filtrados
   const buscarDadosFiltrados = async (filtro) => {
     setLoading(true);
     try {
       //const response = await axios.get(`http://localhost:3001/api/acompanhamentoServico?filtro=${filtro}`);
-      const response = await axios.get(`https://juritech-data-pilot-backend-8fc90525fb93.herokuapp.com/api/acompanhamentoServico?filtro=${filtro}`);
+      //const response = await axios.get(`https://juritech-data-pilot-backend-8fc90525fb93.herokuapp.com/api/acompanhamentoServico?filtro=${filtro}`);
+      const response = await axios.get(`${baseURL}/api/acompanhamentoServico?filtro=${filtro}`);
       
       // Atualize o estado com os dados recebidos
       setDados(response.data.map(item => ({
