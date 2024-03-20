@@ -15,8 +15,7 @@ function Login() {
 
     // Supondo que esta é a chamada API que retorna o token
     //const response = await fetch('http://localhost:3001/login', {
-    //const response = await fetch('https://juritech-data-pilot-backend-8fc90525fb93.herokuapp.com/login', {
-    const response = await fetch(`${baseURL}/login`, {
+    const response = await fetch('https://juritech-data-pilot-backend-8fc90525fb93.herokuapp.com/login', {    
 
       method: 'POST',
       headers: {
