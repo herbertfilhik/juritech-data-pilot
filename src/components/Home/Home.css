@@ -1,11 +1,4 @@
 /* Estilos específicos para o componente Home, com uma pitada de modernidade */
-.btn-disabled {
-  pointer-events: none; /* Desativa eventos de clique */
-  color: #aaa; /* Cor cinza para o texto, por exemplo */
-  background-color: #f5f5f5; /* Cor de fundo mais clara */
-  border-color: #ddd; /* Cor da borda mais clara */
-}
-
 .home-container {
   display: flex;
   flex-direction: column;
