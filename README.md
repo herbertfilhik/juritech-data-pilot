@@ -69,4 +69,15 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
-### `vercel` to deploy the app
+### `heroku` to deploy the app
+
+set NODE_OPTIONS=--openssl-legacy-provider
+npm install -g heroku
+heroku --version
+heroku login
+heroku create juritech-data-pilot
+git push heroku main
+heroku restart
+heroku logs --tail --app juritech-data-pilot
+
+incluir var ambientes para acessar o banco de dados
