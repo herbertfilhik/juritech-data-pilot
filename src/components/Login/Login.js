@@ -7,15 +7,17 @@ function Login() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate(); // Hook para navegação
 
-  const environment = process.env.ENVIRONMENT; // 'DEV' ou 'PRD'
-  const baseURL = environment === 'DEV' ? process.env.DEV : process.env.PRD;
+  const environment = process.env.REACT_APP_ENVIRONMENT;
+  const baseURL = environment === "DEV" ? process.env.REACT_APP_DEV : process.env.REACT_APP_PRD;  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     // Supondo que esta é a chamada API que retorna o token
     //const response = await fetch('http://localhost:3001/login', {
-    const response = await fetch('https://juritech-data-pilot-backend-8fc90525fb93.herokuapp.com/login', {    
+    //const response = await fetch('https://juritech-data-pilot-backend-8fc90525fb93.herokuapp.com/login', {  
+    console.log('environment:', baseURL);   
+    const response = await fetch(`${baseURL}/login`, {
 
       method: 'POST',
       headers: {
