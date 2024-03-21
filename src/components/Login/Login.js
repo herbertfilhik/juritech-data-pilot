@@ -32,11 +32,18 @@ function Login() {
     const data = await response.json();
   
     if (response.ok) {
-      console.log('Login bem-sucedido:', data);
-      localStorage.setItem('token', data.token); // Armazena o token no localStorage
-      navigate('/'); // Redireciona para a página inicial
+      try {
+        const data = await response.json();
+        console.log('Login bem-sucedido:', data);
+        localStorage.setItem('token', data.token);
+        navigate('/');
+      } catch (error) {
+        console.error('Não foi possível analisar a resposta como JSON:', error);
+        // Aqui você pode mostrar uma mensagem de erro ou lidar com a resposta HTML
+      }
     } else {
-      alert(data.message || 'Falha no login');
+      alert('Falha no login');
+      // Aqui você também pode lidar com a resposta não-OK (como um erro 404 ou 500)
     }
   };
 
