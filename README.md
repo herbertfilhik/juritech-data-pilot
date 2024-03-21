@@ -79,5 +79,9 @@ heroku create juritech-data-pilot
 git push heroku main
 heroku restart
 heroku logs --tail --app juritech-data-pilot
+heroku ps:scale web=0 -a juritech-data-pilot 
+heroku restart -a juritech-data-pilot 
+heroku ps:restart web.1 -a juritech-data-pilot
+
 
 incluir var ambientes para acessar o banco de dados
