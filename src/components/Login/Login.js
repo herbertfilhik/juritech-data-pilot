@@ -12,22 +12,25 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    // Supondo que esta é a chamada API que retorna o token
-    //const response = await fetch('http://localhost:3001/login', {
-    //const response = await fetch('https://juritech-data-pilot-backend-8fc90525fb93.herokuapp.com/login', {  
-    console.log('environment:', baseURL);   
-    const response = await fetch(`${baseURL}/login`, {
-
+  
+    let url; // Vamos definir a URL baseada na condição do ambiente
+    if (environment === "DEV") {
+      url = `${baseURL}/login`; // Se em desenvolvimento, usa a baseURL
+    } else {
+      url = `/login`; // Se não, usa uma rota relativa
+    }
+  
+    console.log('URL:', url);
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ username, password }),
     });
-
+  
     const data = await response.json();
-
+  
     if (response.ok) {
       console.log('Login bem-sucedido:', data);
       localStorage.setItem('token', data.token); // Armazena o token no localStorage
