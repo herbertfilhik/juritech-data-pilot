@@ -11,6 +11,9 @@ const ExcluirTabelaOperacao = ({ setDados }) => {
   const abrirModal = () => setModalVisivel(true);
   const fecharModal = () => setModalVisivel(false);
 
+  const environment = process.env.REACT_APP_ENVIRONMENT;
+  const baseURL = environment === "DEV" ? process.env.REACT_APP_DEV : process.env.REACT_APP_PRD;  
+
   const confirmarExclusao = async () => {
     try {
       // Recuperando o token do armazenamento local
@@ -24,7 +27,8 @@ const ExcluirTabelaOperacao = ({ setDados }) => {
       };
   
       //const response = await axios.delete('http://localhost:3001/api/documentos', config);
-      const response = await axios.delete('https://juritech-data-pilot-backend-8fc90525fb93.herokuapp.com/api/documentos', config);      
+      //const response = await axios.delete('https://juritech-data-pilot-backend-8fc90525fb93.herokuapp.com/api/documentos', config);      
+      const response = await axios.delete(`${baseURL}/api/documentos`, config);      
       
       alert(response.data);
       setDados([]);
