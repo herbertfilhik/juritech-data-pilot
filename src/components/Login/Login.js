@@ -12,38 +12,28 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
-    let url; // Vamos definir a URL baseada na condição do ambiente
-    if (environment === "DEV") {
-      url = `${baseURL}/login`; // Se em desenvolvimento, usa a baseURL
-    } else {
-      url = `/login`; // Se não, usa uma rota relativa
-    }
-  
-    console.log('URL:', url);
-    const response = await fetch(url, {
+
+    // Supondo que esta é a chamada API que retorna o token
+    //const response = await fetch('http://localhost:3001/login', {
+    //const response = await fetch('https://juritech-data-pilot-backend-8fc90525fb93.herokuapp.com/login', {  
+    console.log('environment:', baseURL);   
+    const response = await fetch(`${baseURL}/login`, {
+
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ username, password }),
     });
-  
+
     const data = await response.json();
-  
+
     if (response.ok) {
-      try {
-        const data = await response.json();
-        console.log('Login bem-sucedido:', data);
-        localStorage.setItem('token', data.token);
-        navigate('/');
-      } catch (error) {
-        console.error('Não foi possível analisar a resposta como JSON:', error);
-        // Aqui você pode mostrar uma mensagem de erro ou lidar com a resposta HTML
-      }
+      console.log('Login bem-sucedido:', data);
+      localStorage.setItem('token', data.token); // Armazena o token no localStorage
+      navigate('/'); // Redireciona para a página inicial
     } else {
-      alert('Falha no login');
-      // Aqui você também pode lidar com a resposta não-OK (como um erro 404 ou 500)
+      alert(data.message || 'Falha no login');
     }
   };
 
