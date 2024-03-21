@@ -1,17 +1,33 @@
 // IncluireExcluirOperacao.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Table, Input } from 'antd';
 import { Link } from 'react-router-dom';
 import './IncluireExcluirOperacao.css';
+import { Table, Input, Modal, Button } from 'antd';
 
 const IncluireExcluirOperacao = () => {
   const [dados, setDados] = useState([]);
   const [filtro, setFiltro] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [registroAtual, setRegistroAtual] = useState(null);
 
   const environment = process.env.REACT_APP_ENVIRONMENT;
   const baseURL = environment === "DEV" ? process.env.REACT_APP_DEV : process.env.REACT_APP_PRD;  
+
+  const showModal = (registro) => {
+    setRegistroAtual(registro);
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    // Aqui você coloca a lógica para alterar ou excluir o registro
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
 
   // Função para buscar dados filtrados
   const buscarDadosFiltrados = async (filtro) => {
@@ -75,6 +91,15 @@ const IncluireExcluirOperacao = () => {
 
 // Definição das colunas
 const columns = [
+  {
+    title: 'Ação',
+    key: 'acao',
+    render: (_, record) => (
+      <Button type="primary" onClick={() => showModal(record)}>
+        Editar/Excluir
+      </Button>
+    ),
+  },
   {
     title: 'Controle Target',
     dataIndex: 'controleTarget',
@@ -210,6 +235,7 @@ const columns = [
     dataIndex: 'nf',
     key: 'nf',
   },
+
   // ...definir outras colunas conforme necessário
 ];
 
@@ -237,6 +263,21 @@ const columns = [
         loading={loading}
         rowClassName={getRowClassName}
       />
+      <Modal
+        title="Editar Registro"
+        visible={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        footer={[
+          <Button key="back" onClick={handleCancel}>
+            Cancelar
+          </Button>,
+          // Botões de ação, como salvar alterações ou excluir registro, devem ser adicionados aqui
+        ]}
+      >
+        {/* Formulário e/ou informações do registro para edição ou exclusão */}
+        {/* Você pode usar registroAtual para acessar os dados do registro selecionado */}
+      </Modal>
     </div>
   );  
 };
