@@ -3,7 +3,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './IncluireExcluirOperacao.css';
-import { Table, Input, Modal, Button } from 'antd';
+import moment from 'moment';
+import { DatePicker, Form, Table, Input, Modal, Button } from 'antd';
+import dayjs from 'dayjs';
+import dayjsGenerateConfig from 'rc-picker/lib/generate/dayjs';
+import generatePicker from 'antd/lib/date-picker/generatePicker';
 
 const IncluireExcluirOperacao = () => {
   const [dados, setDados] = useState([]);
@@ -15,6 +19,35 @@ const IncluireExcluirOperacao = () => {
   const environment = process.env.REACT_APP_ENVIRONMENT;
   const baseURL = environment === "DEV" ? process.env.REACT_APP_DEV : process.env.REACT_APP_PRD;  
 
+  // Função chamada quando o usuário clica no botão Salvar na modal
+  const handleSave = async () => {
+    try {
+      // Aqui você faria a chamada API para salvar as alterações
+      // Por exemplo, se você está editando um registro, você pode fazer uma chamada PUT ou PATCH
+      await axios.put(`/api/caminho/${registroAtual.key}`, {
+        // ...dados para atualizar...
+      });
+      // Atualize o estado se necessário e feche a modal
+      setIsModalVisible(false);
+    } catch (error) {
+      console.error('Erro ao salvar:', error);
+      // Trate o erro como achar melhor
+    }
+  };
+
+  // Função chamada quando o usuário clica no botão Excluir na modal
+  const handleDelete = async () => {
+    try {
+      // Aqui você faria a chamada API para excluir o registro
+      await axios.delete(`/api/caminho/${registroAtual.key}`);
+      // Atualize o estado se necessário e feche a modal
+      setIsModalVisible(false);
+    } catch (error) {
+      console.error('Erro ao excluir:', error);
+      // Trate o erro como achar melhor
+    }
+  };
+  
   const showModal = (registro) => {
     setRegistroAtual(registro);
     setIsModalVisible(true);
@@ -89,155 +122,155 @@ const IncluireExcluirOperacao = () => {
     return () => clearTimeout(delayDebounceFn);
   }, [filtro]);
 
-// Definição das colunas
-const columns = [
-  {
-    title: 'Ação',
-    key: 'acao',
-    render: (_, record) => (
-      <Button type="primary" onClick={() => showModal(record)}>
-        Editar/Excluir
-      </Button>
-    ),
-  },
-  {
-    title: 'Controle Target',
-    dataIndex: 'controleTarget',
-    key: 'controleTarget',
-  },
-  {
-    title: 'Data de Solicitação',
-    dataIndex: 'dtSolicitacao',
-    key: 'dtSolicitacao',
-  },
-  {
-    title: 'Solicitante',
-    dataIndex: 'solicitante',
-    key: 'solicitante',
-  },
-  {
-    title: 'Cliente',
-    dataIndex: 'cliente',
-    key: 'cliente',
-  },
-  {
-    title: 'CNPJ',
-    dataIndex: 'cnpj',
-    key: 'cnpj',
-  },
-  {
-    title: 'Data de Início',
-    dataIndex: 'dataInicio',
-    key: 'dataInicio',
-  },
-  {
-    title: 'Grupo',
-    dataIndex: 'grupo',
-    key: 'grupo',
-  },
-  {
-    title: 'Município',
-    dataIndex: 'municipio',
-    key: 'municipio',
-  },
-  {
-    title: 'UF',
-    dataIndex: 'uf',
-    key: 'uf',
-  },
-  {
-    title: 'Deliberação',
-    dataIndex: 'deliberacao',
-    key: 'deliberacao',
-  },
-  {
-    title: 'Ato Societário',
-    dataIndex: 'atoSocietario',
-    key: 'atoSocietario',
-  },
-  {
-    title: 'Quantidade de impressão',
-    dataIndex: 'quantidadeImpressao',
-    key: 'quantidadeImpressao',
-  },
-  {
-    title: 'Complexidade do Processo',
-    dataIndex: 'complexidadeProcesso',
-    key: 'complexidadeProcesso',
-  },
-  {
-    title: 'Setor',
-    dataIndex: 'setor',
-    key: 'setor',
-  },
-  {
-    title: 'Executor',
-    dataIndex: 'executor',
-    key: 'executor',
-  },
-  {
-    title: 'Serviço',
-    dataIndex: 'servico',
-    key: 'servico',
-  },
-  {
-    title: 'SLA',
-    dataIndex: 'sla',
-    key: 'sla',
-  },
-  {
-    title: 'Cumprimento de SLA',
-    dataIndex: 'cumprimentoSla',
-    key: 'cumprimentoSla',
-  },
-  {
-    title: 'Data do Protocolo',
-    dataIndex: 'dataProtocolo',
-    key: 'dataProtocolo',
-  },
-  {
-    title: 'Protocolo',
-    dataIndex: 'protocolo',
-    key: 'protocolo',
-  },
-  {
-    title: 'Registro',
-    dataIndex: 'registro',
-    key: 'registro',
-  },
-  {
-    title: 'Status',
-    dataIndex: 'status',
-    key: 'status',
-  },
-  {
-    title: 'MÊS',
-    dataIndex: 'mes',
-    key: 'mes',
-  },
-  {
-    title: 'Período Processual',
-    dataIndex: 'periodoProcessual',
-    key: 'periodoProcessual',
-  },
-  {
-    title: 'Data de Finalização',
-    dataIndex: 'dataFinalizacao',
-    key: 'dataFinalizacao',
-  },
-  {
-    title: 'STATUS',
-    dataIndex: 'STATUS',
-    key: 'STATUS',
-  },
-  {
-    title: 'NF',
-    dataIndex: 'nf',
-    key: 'nf',
-  },
+  // Definição das colunas
+  const columns = [
+    {
+      title: 'Ação',
+      key: 'acao',
+      render: (_, record) => (
+        <Button type="primary" onClick={() => showModal(record)}>
+          Editar/Excluir
+        </Button>
+      ),
+    },
+    {
+      title: 'Controle Target',
+      dataIndex: 'controleTarget',
+      key: 'controleTarget',
+    },
+    {
+      title: 'Data de Solicitação',
+      dataIndex: 'dtSolicitacao',
+      key: 'dtSolicitacao',
+    },
+    {
+      title: 'Solicitante',
+      dataIndex: 'solicitante',
+      key: 'solicitante',
+    },
+    {
+      title: 'Cliente',
+      dataIndex: 'cliente',
+      key: 'cliente',
+    },
+    {
+      title: 'CNPJ',
+      dataIndex: 'cnpj',
+      key: 'cnpj',
+    },
+    {
+      title: 'Data de Início',
+      dataIndex: 'dataInicio',
+      key: 'dataInicio',
+    },
+    {
+      title: 'Grupo',
+      dataIndex: 'grupo',
+      key: 'grupo',
+    },
+    {
+      title: 'Município',
+      dataIndex: 'municipio',
+      key: 'municipio',
+    },
+    {
+      title: 'UF',
+      dataIndex: 'uf',
+      key: 'uf',
+    },
+    {
+      title: 'Deliberação',
+      dataIndex: 'deliberacao',
+      key: 'deliberacao',
+    },
+    {
+      title: 'Ato Societário',
+      dataIndex: 'atoSocietario',
+      key: 'atoSocietario',
+    },
+    {
+      title: 'Quantidade de impressão',
+      dataIndex: 'quantidadeImpressao',
+      key: 'quantidadeImpressao',
+    },
+    {
+      title: 'Complexidade do Processo',
+      dataIndex: 'complexidadeProcesso',
+      key: 'complexidadeProcesso',
+    },
+    {
+      title: 'Setor',
+      dataIndex: 'setor',
+      key: 'setor',
+    },
+    {
+      title: 'Executor',
+      dataIndex: 'executor',
+      key: 'executor',
+    },
+    {
+      title: 'Serviço',
+      dataIndex: 'servico',
+      key: 'servico',
+    },
+    {
+      title: 'SLA',
+      dataIndex: 'sla',
+      key: 'sla',
+    },
+    {
+      title: 'Cumprimento de SLA',
+      dataIndex: 'cumprimentoSla',
+      key: 'cumprimentoSla',
+    },
+    {
+      title: 'Data do Protocolo',
+      dataIndex: 'dataProtocolo',
+      key: 'dataProtocolo',
+    },
+    {
+      title: 'Protocolo',
+      dataIndex: 'protocolo',
+      key: 'protocolo',
+    },
+    {
+      title: 'Registro',
+      dataIndex: 'registro',
+      key: 'registro',
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+    },
+    {
+      title: 'MÊS',
+      dataIndex: 'mes',
+      key: 'mes',
+    },
+    {
+      title: 'Período Processual',
+      dataIndex: 'periodoProcessual',
+      key: 'periodoProcessual',
+    },
+    {
+      title: 'Data de Finalização',
+      dataIndex: 'dataFinalizacao',
+      key: 'dataFinalizacao',
+    },
+    {
+      title: 'STATUS',
+      dataIndex: 'STATUS',
+      key: 'STATUS',
+    },
+    {
+      title: 'NF',
+      dataIndex: 'nf',
+      key: 'nf',
+    },
 
-  // ...definir outras colunas conforme necessário
-];
+    // ...definir outras colunas conforme necessário
+  ];
 
   // Handler para mudança no filtro
   const handleFilterChange = (e) => {
@@ -269,14 +302,30 @@ const columns = [
         onOk={handleOk}
         onCancel={handleCancel}
         footer={[
-          <Button key="back" onClick={handleCancel}>
+          <Button key="cancel" onClick={handleCancel}>
             Cancelar
           </Button>,
+          <Button key="delete" onClick={handleDelete}>
+            Excluir
+          </Button>,
+          <Button key="save" type="primary" onClick={handleSave}>
+            Salvar
+          </Button>,
+        
           // Botões de ação, como salvar alterações ou excluir registro, devem ser adicionados aqui
-        ]}
-      >
+        ]}>
         {/* Formulário e/ou informações do registro para edição ou exclusão */}
         {/* Você pode usar registroAtual para acessar os dados do registro selecionado */}
+        <Form layout="vertical" initialValues={{ ...registroAtual }}>
+          <Form.Item label="Solicitante" name="solicitante">
+            <Input />
+          </Form.Item>
+          <Form.Item label="Cliente" name="cliente">
+            <Input />
+          </Form.Item>
+          {/* Adicione Form.Items para outros campos que você quer editar */}
+          {/* ... */}
+        </Form>
       </Modal>
     </div>
   );  
