@@ -50,11 +50,13 @@ const IncluireExcluirOperacao = () => {
     // Ajuste esta parte se você estiver utilizando dayjs ou moment para as datas
     const dataInicio = registro.dtInicio ? moment(registro.dtInicio) : null;
     const dataFinalizacao = registro.dataFinalizacao ? moment(registro.dataFinalizacao) : null;
+    const dataProtocolo = registro.dataProtocolo ? moment(registro.dataProtocolo) : null;
   
     setRegistroAtual({
       ...registro,
       dtInicio: dataInicio,
       dataFinalizacao: dataFinalizacao,
+      dataProtocolo: dataProtocolo,
       // Outros campos que requerem tratamento especial para datas ou outros tipos
     });
   
@@ -375,9 +377,9 @@ const IncluireExcluirOperacao = () => {
           <Form.Item label="Cumprimento de SLA" name="cumprimentoSLA">
             <Input />
           </Form.Item>
-          {/*<Form.Item label="Data do Protocolo" name="dataProtocolo">
+          <Form.Item label="Data do Protocolo" name="dataProtocolo">
             <DatePicker />
-          </Form.Item>*/}
+          </Form.Item>
           <Form.Item label="Protocolo" name="protocolo">
             <Input />
           </Form.Item>
