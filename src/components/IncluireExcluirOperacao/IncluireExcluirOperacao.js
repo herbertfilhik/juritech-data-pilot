@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import './IncluireExcluirOperacao.css';
 import moment from 'moment'; // Importe moment se estiver usando DatePicker do antd
 import { Form, Table, Input, Modal, Button, InputNumber, DatePicker } from 'antd';
+import { message } from 'antd';
 
 
 const IncluireExcluirOperacao = () => {
@@ -17,21 +18,45 @@ const IncluireExcluirOperacao = () => {
   const environment = process.env.REACT_APP_ENVIRONMENT;
   const baseURL = environment === "DEV" ? process.env.REACT_APP_DEV : process.env.REACT_APP_PRD;  
 
-  // Função chamada quando o usuário clica no botão Salvar na modal
-  const handleSave = async () => {
-    try {
-      // Aqui você faria a chamada API para salvar as alterações
-      // Por exemplo, se você está editando um registro, você pode fazer uma chamada PUT ou PATCH
-      await axios.put(`/api/caminho/${registroAtual.key}`, {
-        // ...dados para atualizar...
-      });
-      // Atualize o estado se necessário e feche a modal
-      setIsModalVisible(false);
-    } catch (error) {
-      console.error('Erro ao salvar:', error);
-      // Trate o erro como achar melhor
+// Função chamada quando o usuário clica no botão Salvar na modal
+const handleSave = async () => {
+  console.log("Tentando salvar o registro com a chave:", registroAtual?.key);  
+
+  if (!registroAtual || !registroAtual.key) {
+    message.error("Erro: chave do registro não definida.");
+    return; // Não continue se 'key' não estiver definida
+  }
+
+  try {
+    // Construa o objeto com os dados que precisam ser atualizados
+    const updatedData = {
+      ...registroAtual, // isso vai espalhar todas as propriedades do registro atual
+      // você pode adicionar campos adicionais ou modificar valores aqui, se necessário
+    };
+
+    // Faz a chamada para a API para atualizar os dados no backend
+    //const response = await axios.put(`${baseURL}/api/saveRegister/${registroAtual.key}`, updatedData);
+    const response = await axios.put(`${baseURL}/api/saveRegister/${registroAtual.key}`, registroAtual);
+
+    if (response.status === 200) {
+      // Se a chamada for bem-sucedida, atualize o estado dos dados com o registro atualizado
+      const updatedRecords = dados.map(item =>
+        item.key === registroAtual.key ? { ...item, ...updatedData } : item
+      );
+      setDados(updatedRecords);
+      message.success('Registro atualizado com sucesso!');
+    } else {
+      // Se a chamada não for bem-sucedida, mostre uma mensagem de erro
+      message.error('Não foi possível atualizar o registro.');
     }
-  };
+    
+    // Feche a modal
+    setIsModalVisible(false);
+  } catch (error) {
+    console.error('Erro ao salvar:', error);
+    message.error('Erro ao salvar o registro.');
+  }
+};
 
   // Função chamada quando o usuário clica no botão Excluir na modal
   const handleDelete = async () => {
@@ -47,6 +72,13 @@ const IncluireExcluirOperacao = () => {
   };
   
   const showModal = (registro) => {
+    console.log("Chave do registro selecionado para edição:", registro.key);
+    // Verifique se 'registro' possui uma chave 'key'
+    if (!registro || !registro.key) {
+      message.error("Erro: chave do registro para edição não definida.");
+      return; // Não continue se 'key' não estiver definida
+    }
+
     // Ajuste esta parte se você estiver utilizando dayjs ou moment para as datas
     const dataInicio = registro.dtInicio ? moment(registro.dtInicio) : null;
     const dataFinalizacao = registro.dataFinalizacao ? moment(registro.dataFinalizacao) : null;
@@ -325,8 +357,13 @@ const IncluireExcluirOperacao = () => {
         <Form
             layout="vertical"
             initialValues={{ ...registroAtual }} // Assegure-se de que registroAtual contém todos os dados do registro
-            onValuesChange={(changedValues, allValues) => {
-              setRegistroAtual(allValues);
+            onValuesChange={(_, allValues) => {
+              {/*setRegistroAtual(prev => ({ ...prev, ...allValues }));*/}
+              setRegistroAtual(prev => {
+                const newState = { ...prev, ...allValues };
+                console.log('Novo estado de registroAtual:', newState); // Debug
+                return newState;
+              });
             }}
           >
           <Form.Item label="Solicitante" name="solicitante">
