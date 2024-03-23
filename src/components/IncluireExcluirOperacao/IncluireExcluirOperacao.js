@@ -377,7 +377,7 @@ const IncluireExcluirOperacao = () => {
           </Form.Item>
           {/*<Form.Item label="Data do Protocolo" name="dataProtocolo">
             <DatePicker />
-          </Form.Item>
+          </Form.Item>*/}
           <Form.Item label="Protocolo" name="protocolo">
             <Input />
           </Form.Item>
@@ -401,7 +401,7 @@ const IncluireExcluirOperacao = () => {
           </Form.Item>
           <Form.Item label="NF" name="nf">
             <Input />
-          </Form.Item>*/}
+          </Form.Item>
           {/* Adicione Form.Items para outros campos que você quer editar */}
           {/* ... */}
         </Form>
