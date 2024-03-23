@@ -3,9 +3,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './IncluireExcluirOperacao.css';
-import { Form, Table, Input, Modal, Button } from 'antd';
-import { DatePicker } from 'antd';
 import moment from 'moment'; // Importe moment se estiver usando DatePicker do antd
+import { Form, Table, Input, Modal, Button, InputNumber, DatePicker } from 'antd';
+
 
 const IncluireExcluirOperacao = () => {
   const [dados, setDados] = useState([]);
@@ -354,7 +354,7 @@ const IncluireExcluirOperacao = () => {
           <Form.Item label="Ato Societário" name="atoSocietario">
             <Input />
           </Form.Item>
-          {/*<Form.Item label="Quantidade de impressão" name="quantidadeImpressao">
+          <Form.Item label="Quantidade de impressão" name="quantidadeImpressao">
             <InputNumber />
           </Form.Item>
           <Form.Item label="Complexidade do Processo" name="complexidadeProcesso">
@@ -375,7 +375,7 @@ const IncluireExcluirOperacao = () => {
           <Form.Item label="Cumprimento de SLA" name="cumprimentoSLA">
             <Input />
           </Form.Item>
-          <Form.Item label="Data do Protocolo" name="dataProtocolo">
+          {/*<Form.Item label="Data do Protocolo" name="dataProtocolo">
             <DatePicker />
           </Form.Item>
           <Form.Item label="Protocolo" name="protocolo">
