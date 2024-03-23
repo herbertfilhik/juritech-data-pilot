@@ -3,11 +3,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './IncluireExcluirOperacao.css';
-import moment from 'moment';
-import { DatePicker, Form, Table, Input, Modal, Button } from 'antd';
-import dayjs from 'dayjs';
-import dayjsGenerateConfig from 'rc-picker/lib/generate/dayjs';
-import generatePicker from 'antd/lib/date-picker/generatePicker';
+import { Form, Table, Input, Modal, Button } from 'antd';
+import { DatePicker } from 'antd';
+import moment from 'moment'; // Importe moment se estiver usando DatePicker do antd
 
 const IncluireExcluirOperacao = () => {
   const [dados, setDados] = useState([]);
@@ -49,7 +47,17 @@ const IncluireExcluirOperacao = () => {
   };
   
   const showModal = (registro) => {
-    setRegistroAtual(registro);
+    // Ajuste esta parte se você estiver utilizando dayjs ou moment para as datas
+    const dataInicio = registro.dtInicio ? moment(registro.dtInicio) : null;
+    const dataFinalizacao = registro.dataFinalizacao ? moment(registro.dataFinalizacao) : null;
+  
+    setRegistroAtual({
+      ...registro,
+      dtInicio: dataInicio,
+      dataFinalizacao: dataFinalizacao,
+      // Outros campos que requerem tratamento especial para datas ou outros tipos
+    });
+  
     setIsModalVisible(true);
   };
 
@@ -107,11 +115,6 @@ const IncluireExcluirOperacao = () => {
     }
     setLoading(false);
   };
-
-  // Efeito para buscar dados quando o componente é montado
-  /*useEffect(() => {
-    buscarDadosFiltrados(filtro);
-  }, []);*/
 
   // Efeito para buscar dados quando o valor do filtro muda
   useEffect(() => {
@@ -297,6 +300,7 @@ const IncluireExcluirOperacao = () => {
         rowClassName={getRowClassName}
       />
       <Modal
+        key={registroAtual ? registroAtual.key : null}
         title="Editar Registro"
         visible={isModalVisible}
         onOk={handleOk}
@@ -316,13 +320,88 @@ const IncluireExcluirOperacao = () => {
         ]}>
         {/* Formulário e/ou informações do registro para edição ou exclusão */}
         {/* Você pode usar registroAtual para acessar os dados do registro selecionado */}
-        <Form layout="vertical" initialValues={{ ...registroAtual }}>
+        <Form
+            layout="vertical"
+            initialValues={{ ...registroAtual }} // Assegure-se de que registroAtual contém todos os dados do registro
+            onValuesChange={(changedValues, allValues) => {
+              setRegistroAtual(allValues);
+            }}
+          >
           <Form.Item label="Solicitante" name="solicitante">
             <Input />
           </Form.Item>
           <Form.Item label="Cliente" name="cliente">
             <Input />
           </Form.Item>
+          <Form.Item label="CNPJ" name="cnpj">
+            <Input />
+          </Form.Item>
+          <Form.Item label="Data de Início" name="dtInicio">
+            <DatePicker />
+          </Form.Item>
+          <Form.Item label="Grupo" name="grupo">
+            <Input />
+          </Form.Item>
+          <Form.Item label="Município" name="municipio">
+            <Input />
+          </Form.Item>
+          <Form.Item label="UF" name="uf">
+            <Input />
+          </Form.Item>
+          <Form.Item label="Deliberação" name="deliberacao">
+            <Input />
+          </Form.Item>
+          <Form.Item label="Ato Societário" name="atoSocietario">
+            <Input />
+          </Form.Item>
+          {/*<Form.Item label="Quantidade de impressão" name="quantidadeImpressao">
+            <InputNumber />
+          </Form.Item>
+          <Form.Item label="Complexidade do Processo" name="complexidadeProcesso">
+            <Input />
+          </Form.Item>
+          <Form.Item label="Setor" name="setor">
+            <Input />
+          </Form.Item>
+          <Form.Item label="Executor" name="executor">
+            <Input />
+          </Form.Item>
+          <Form.Item label="Serviço" name="servico">
+            <Input />
+          </Form.Item>
+          <Form.Item label="SLA" name="sla">
+            <Input />
+          </Form.Item>
+          <Form.Item label="Cumprimento de SLA" name="cumprimentoSLA">
+            <Input />
+          </Form.Item>
+          <Form.Item label="Data do Protocolo" name="dataProtocolo">
+            <DatePicker />
+          </Form.Item>
+          <Form.Item label="Protocolo" name="protocolo">
+            <Input />
+          </Form.Item>
+          <Form.Item label="Registro" name="registro">
+            <Input />
+          </Form.Item>
+          <Form.Item label="Status" name="status">
+            <Input />
+          </Form.Item>
+          <Form.Item label="MÊS" name="mes">
+            <Input />
+          </Form.Item>
+          <Form.Item label="Período Processual" name="periodoProcessual">
+            <Input />
+          </Form.Item>
+          <Form.Item label="Data de Finalização" name="dataFinalizacao">
+            <DatePicker />
+          </Form.Item>
+          <Form.Item label="STATUS" name="statusFaturamento">
+            <Input />
+          </Form.Item>
+          <Form.Item label="NF" name="nf">
+            <Input />
+          </Form.Item>*/}
           {/* Adicione Form.Items para outros campos que você quer editar */}
           {/* ... */}
         </Form>

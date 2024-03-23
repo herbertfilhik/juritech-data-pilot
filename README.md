@@ -85,3 +85,5 @@ heroku ps:restart web.1 -a juritech-data-pilot
 
 
 incluir var ambientes para acessar o banco de dados
+
+set NODE_OPTIONS=--openssl-legacy-provider
