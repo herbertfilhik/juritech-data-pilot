@@ -15,18 +15,71 @@ const IncluireExcluirOperacao = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [registroAtual, setRegistroAtual] = useState(null);
 
+  const [isCreatingNew, setIsCreatingNew] = useState(false);
+
   const environment = process.env.REACT_APP_ENVIRONMENT;
   const baseURL = environment === "DEV" ? process.env.REACT_APP_DEV : process.env.REACT_APP_PRD;  
 
+  // Função para mostrar o modal em branco para um novo registro
+  const handleNewRegister = () => {
+    setIsCreatingNew(true); // Estamos criando um novo registro
+    setRegistroAtual({}); // Inicialize um objeto vazio para o novo registro
+    setIsModalVisible(true); // Mostra o modal
+  };
+
   const handleCreate = async () => {
     try {
-      // Aqui você irá coletar os dados do form para criar um novo registro
-      // E fazer a requisição POST para o servidor
-      // ...
+      // Assegure-se que registroAtual contém todos os dados do formulário
+      console.log("Tentando criar um novo registro:", registroAtual);
   
-      message.success('Registro criado com sucesso!');
-      setIsModalVisible(false);
-      // Atualizar a lista de registros aqui, se necessário
+      // Você precisa garantir que a estrutura de registroAtual corresponde àquela esperada pelo backend.
+      const payload = {
+        // estruture aqui os dados conforme esperado pelo seu modelo de Documento no backend
+        // Por exemplo:
+        nome: registroAtual.nome,
+        dados: {
+          "Controle Target": registroAtual.controleTarget,
+          "Data de Solicitação": registroAtual.dtSolicitacao ? { "$date": registroAtual.dtSolicitacao } : null,
+          "Data de Início": registroAtual.dtInicio ? { "$date": registroAtual.dtInicio } : null,
+          "Solicitante": registroAtual.solicitante,
+          "Grupo": registroAtual.grupo,
+          "Cliente": registroAtual.cliente,
+          "CNPJ": registroAtual.cnpj,
+          "Município": registroAtual.municipio,
+          "UF": registroAtual.uf,
+          "Deliberação": registroAtual.deliberacao,
+          "Ato Societário": registroAtual.atoSocietario,
+          "Quantidade de impressão": registroAtual.quantidadeImpressao,
+          "Complexidade do Processo": registroAtual.complexidadeProcesso,
+          "Setor": registroAtual.setor,
+          "Executor": registroAtual.executor,
+          "Serviço": registroAtual.servico,
+          "SLA": registroAtual.sla,
+          "Cumprimento de SLA": registroAtual.cumprimentoSLA,
+          "Data do Protocolo": registroAtual.dataProtocolo ? { "$date": registroAtual.dataProtocolo } : null,
+          "Protocolo": registroAtual.protocolo,
+          "Registro": registroAtual.registro,
+          "Status": registroAtual.status,
+          "MÊS": registroAtual.mes,
+          "Período Processual": registroAtual.periodoProcessual,
+          "Data de Finalização": registroAtual.dataFinalizacao ? { "$date": registroAtual.dataFinalizacao } : null,
+          "STATUS": registroAtual.statusFaturamento,
+          "NF": registroAtual.nf
+        },
+        // ... mais campos se necessário
+      };
+  
+      // Faz a requisição POST para o servidor
+      const response = await axios.post(`${baseURL}/api/createDocument`, payload);
+  
+      if (response.status === 201) {
+        // Se a criação foi bem-sucedida, adicione o novo registro à lista de registros
+        setDados([...dados, response.data]);
+        message.success('Registro criado com sucesso!');
+        setIsModalVisible(false);
+      } else {
+        message.error('Não foi possível criar o registro.');
+      }
     } catch (error) {
       console.error('Erro ao criar o registro:', error);
       message.error(`Erro ao criar o registro: ${error.message}`);
@@ -120,6 +173,7 @@ const IncluireExcluirOperacao = () => {
   };
   
   const showModal = (registro) => {
+    setIsCreatingNew(false); // Não estamos criando um novo registro, mas editando
     console.log("Chave do registro selecionado para edição:", registro.key);
     // Verifique se 'registro' possui uma chave 'key'
     if (!registro || !registro.key) {
@@ -150,6 +204,35 @@ const IncluireExcluirOperacao = () => {
 
   const handleCancel = () => {
     setIsModalVisible(false);
+    setIsCreatingNew(false); // Reseta o estado para não estar criando um novo registro
+    setRegistroAtual(null); // Limpa qualquer registro selecionado
+
+  };
+
+  // Renderize os botões do rodapé do modal com base em isCreatingNew
+  const renderModalFooter = () => {
+    if (isCreatingNew) {
+      return [
+        <Button key="cancel" onClick={handleCancel}>
+          Cancelar
+        </Button>,
+        <Button key="submit" type="primary" onClick={handleCreate}>
+          Criar
+        </Button>
+      ];
+    } else {
+      return [
+        <Button key="cancel" onClick={handleCancel}>
+          Cancelar
+        </Button>,
+        <Button key="delete" onClick={() => handleDelete(registroAtual.key)}>
+          Excluir
+        </Button>,
+        <Button key="save" type="primary" onClick={handleSave}>
+          Salvar
+        </Button>
+      ];
+    }
   };
 
   // Função para buscar dados filtrados
@@ -370,7 +453,7 @@ const IncluireExcluirOperacao = () => {
     <div className="incluireExcluirOperacao"> {/* Classe aplicada ao div container */}
       <h1>Manutenção de Serviço</h1>
       <Link to="/" className="voltarLink">Voltar à tela inicial</Link> {/* Classe aplicada ao Link */}
-      <Button key="newRegister" type="primary" onClick={handleCreate}> Criar Registro </Button>
+      <Button key="newRegister" type="primary" onClick={handleNewRegister}> Criar Registro </Button>
       <br />
       <Input
         placeholder="Filtrar por qualquer entrada"
@@ -385,24 +468,12 @@ const IncluireExcluirOperacao = () => {
         rowClassName={getRowClassName}
       />
       <Modal
-        key={registroAtual ? registroAtual.key : null}
-        title="Editar Registro"
+        key={registroAtual ? registroAtual.key : 'new'}
+        title={isCreatingNew ? "Criar Novo Registro" : "Editar Registro"}
         visible={isModalVisible}
-        onOk={handleOk}
+        onOk={isCreatingNew ? handleCreate : handleSave}
         onCancel={handleCancel}
-        footer={[
-          <Button key="cancel" onClick={handleCancel}>
-            Cancelar
-          </Button>,
-          <Button key="delete" onClick={handleDelete}>
-            Excluir
-          </Button>,
-          <Button key="save" type="primary" onClick={handleSave}>
-            Salvar
-          </Button>,
-        
-          // Botões de ação, como salvar alterações ou excluir registro, devem ser adicionados aqui
-        ]}>
+        footer={renderModalFooter()}> {/*// Aqui usamos a função para determinar o rodapé*/}          
         {/* Formulário e/ou informações do registro para edição ou exclusão */}
         {/* Você pode usar registroAtual para acessar os dados do registro selecionado */}
         <Form
