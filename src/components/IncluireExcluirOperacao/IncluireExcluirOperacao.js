@@ -18,45 +18,73 @@ const IncluireExcluirOperacao = () => {
   const environment = process.env.REACT_APP_ENVIRONMENT;
   const baseURL = environment === "DEV" ? process.env.REACT_APP_DEV : process.env.REACT_APP_PRD;  
 
-// Função chamada quando o usuário clica no botão Salvar na modal
-const handleSave = async () => {
-  console.log("Tentando salvar o registro com a chave:", registroAtual?.key);  
+  // Função chamada quando o usuário clica no botão Salvar na modal
+  const handleSave = async () => {
+    console.log("Tentando salvar o registro com a chave:", registroAtual?.key);  
 
-  if (!registroAtual || !registroAtual.key) {
-    message.error("Erro: chave do registro não definida.");
-    return; // Não continue se 'key' não estiver definida
-  }
-
-  try {
-    // Construa o objeto com os dados que precisam ser atualizados
-    const updatedData = {
-      ...registroAtual, // isso vai espalhar todas as propriedades do registro atual
-      // você pode adicionar campos adicionais ou modificar valores aqui, se necessário
-    };
-
-    // Faz a chamada para a API para atualizar os dados no backend
-    //const response = await axios.put(`${baseURL}/api/saveRegister/${registroAtual.key}`, updatedData);
-    const response = await axios.put(`${baseURL}/api/saveRegister/${registroAtual.key}`, registroAtual);
-
-    if (response.status === 200) {
-      // Se a chamada for bem-sucedida, atualize o estado dos dados com o registro atualizado
-      const updatedRecords = dados.map(item =>
-        item.key === registroAtual.key ? { ...item, ...updatedData } : item
-      );
-      setDados(updatedRecords);
-      message.success('Registro atualizado com sucesso!');
-    } else {
-      // Se a chamada não for bem-sucedida, mostre uma mensagem de erro
-      message.error('Não foi possível atualizar o registro.');
+    if (!registroAtual || !registroAtual.key) {
+      message.error("Erro: chave do registro não definida.");
+      return; // Não continue se 'key' não estiver definida
     }
-    
-    // Feche a modal
-    setIsModalVisible(false);
-  } catch (error) {
-    console.error('Erro ao salvar:', error);
-    message.error('Erro ao salvar o registro.');
-  }
-};
+
+    try {
+      // Transforme o objeto do estado para o formato esperado pelo back-end
+      const payload = {
+        nome: registroAtual.nome, // assumindo que este campo exista no seu estado
+        dados: {
+          "Controle Target": registroAtual.controleTarget,
+          "Data de Solicitação": registroAtual.dtSolicitacao ? { "$date": registroAtual.dtSolicitacao } : null,
+          "Data de Início": registroAtual.dtInicio ? { "$date": registroAtual.dtInicio } : null,
+          "Solicitante": registroAtual.solicitante,
+          "Grupo": registroAtual.grupo,
+          "Cliente": registroAtual.cliente,
+          "CNPJ": registroAtual.cnpj,
+          "Município": registroAtual.municipio,
+          "UF": registroAtual.uf,
+          "Deliberação": registroAtual.deliberacao,
+          "Ato Societário": registroAtual.atoSocietario,
+          "Quantidade de impressão": registroAtual.quantidadeImpressao,
+          "Complexidade do Processo": registroAtual.complexidadeProcesso,
+          "Setor": registroAtual.setor,
+          "Executor": registroAtual.executor,
+          "Serviço": registroAtual.servico,
+          "SLA": registroAtual.sla,
+          "Cumprimento de SLA": registroAtual.cumprimentoSLA,
+          "Data do Protocolo": registroAtual.dataProtocolo ? { "$date": registroAtual.dataProtocolo } : null,
+          "Protocolo": registroAtual.protocolo,
+          "Registro": registroAtual.registro,
+          "Status": registroAtual.status,
+          "MÊS": registroAtual.mes,
+          "Período Processual": registroAtual.periodoProcessual,
+          "Data de Finalização": registroAtual.dataFinalizacao ? { "$date": registroAtual.dataFinalizacao } : null,
+          "STATUS": registroAtual.statusFaturamento,
+          "NF": registroAtual.nf
+        },
+        // ... inclua todas as outras propriedades de nível superior necessárias
+      };
+
+      // Aqui, substitua `baseURL` pelo seu URL de base real e `path` pelo caminho correto da API
+      const response = await axios.put(`${baseURL}/api/saveRegister/${registroAtual.key}`, payload);
+
+      if (response.status === 200) {
+        // Atualize o estado se a resposta for bem-sucedida
+        const updatedRecords = dados.map(item =>
+          item.key === registroAtual.key ? { ...item, ...registroAtual } : item
+        );
+        setDados(updatedRecords);
+        message.success('Registro atualizado com sucesso!');
+      } else {
+        message.error('Não foi possível atualizar o registro.');
+      }
+
+      // Feche a modal após a atualização
+      setIsModalVisible(false);
+    } catch (error) {
+      // Log de erro e exibição de mensagem de erro para o usuário
+      console.error('Erro ao salvar:', error);
+      message.error(`Erro ao salvar o registro: ${error.message}`);
+    }
+  };
 
   // Função chamada quando o usuário clica no botão Excluir na modal
   const handleDelete = async () => {
