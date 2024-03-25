@@ -157,7 +157,7 @@ const IncluireExcluirOperacao = () => {
   // Função chamada quando o usuário clica no botão Excluir na modal
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`${baseURL}/api/saveRegister/delete/${id}`);
+      const response = await axios.delete(`${baseURL}/api/delete/${id}`);
   
       if (response.status === 200) {
         // Atualize o estado para refletir a exclusão do registro
