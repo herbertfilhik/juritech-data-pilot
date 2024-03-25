@@ -51,9 +51,9 @@ const IncluireExcluirOperacao = () => {
         dados: {
           "Controle Target": registroAtual.controleTarget,
           //"Data de Solicitação": registroAtual.dtSolicitacao ? registroAtual.dtSolicitacao.format('YYYY-MM-DDTHH:mm:ss[Z]') : null,
-          "Data de Solicitação": registroAtual.dtSolicitacao ? registroAtual.dtSolicitacao.toISOString() : null,
+          "Data de Solicitação": registroAtual.dataSolicitacao ? registroAtual.dataSolicitacao.toISOString() : null,
           //"Data de Início": registroAtual.dtInicio ? registroAtual.dtInicio.format('YYYY-MM-DDTHH:mm:ss[Z]') : null,
-          "Data de Início": registroAtual.dtInicio ? registroAtual.dtInicio.toISOString() : null,
+          "Data de Início": registroAtual.dataInicio ? registroAtual.dataInicio.toISOString() : null,
           "Solicitante": registroAtual.solicitante,
           "Grupo": registroAtual.grupo,
           "Cliente": registroAtual.cliente,
@@ -129,9 +129,9 @@ const IncluireExcluirOperacao = () => {
         dados: {
           "Controle Target": registroAtual.controleTarget,
           //"Data de Solicitação": registroAtual.dtSolicitacao ? { "$date": registroAtual.dtSolicitacao } : null,
-          "Data de Solicitação": registroAtual.dtSolicitacao ? registroAtual.dtSolicitacao.toISOString() : null,
+          "Data de Solicitação": registroAtual.dataSolicitacao ? registroAtual.dataSolicitacao.toISOString() : null,
           //"Data de Início": registroAtual.dtInicio ? { "$date": registroAtual.dtInicio } : null,
-          "Data de Início": registroAtual.dtInicio ? registroAtual.dtInicio.toISOString() : null,
+          "Data de Início": registroAtual.dataInicio ? registroAtual.dataInicio.toISOString() : null,
           "Solicitante": registroAtual.solicitante,
           "Grupo": registroAtual.grupo,
           "Cliente": registroAtual.cliente,
@@ -213,15 +213,17 @@ const IncluireExcluirOperacao = () => {
     }
 
     // Ajuste esta parte se você estiver utilizando dayjs ou moment para as datas
-    const dataInicio = registro.dtInicio ? moment(registro.dtInicio) : null;
+    const dataInicio = registro.dataInicio ? moment(registro.dataInicio) : null;
     const dataFinalizacao = registro.dataFinalizacao ? moment(registro.dataFinalizacao) : null;
     const dataProtocolo = registro.dataProtocolo ? moment(registro.dataProtocolo) : null;
+    const dataSolicitacao = registro.dataSolicitacao ? moment(registro.dataSolicitacao) : null;
   
     setRegistroAtual({
       ...registro,
-      dtInicio: dataInicio,
+      dataInicio: dataInicio,
       dataFinalizacao: dataFinalizacao,
       dataProtocolo: dataProtocolo,
+      dataSolicitacao: dataSolicitacao,
       // Outros campos que requerem tratamento especial para datas ou outros tipos
     });
   
@@ -278,8 +280,8 @@ const IncluireExcluirOperacao = () => {
       setDados(response.data.map(item => ({
         key: item._id, // Supondo que cada item tem um _id
         controleTarget: item.dados['Controle Target'],
-        dtSolicitacao: item.dados['Data de Solicitação'],
-        dtInicio: item.dados['Data de Início'], // Added field
+        dataSolicitacao: item.dados['Data de Solicitação'],
+        dataInicio: item.dados['Data de Início'], // Added field
         solicitante: item.dados['Solicitante'],
         grupo: item.dados['Grupo'], // Added field
         cliente: item.dados['Cliente'],
@@ -339,8 +341,8 @@ const IncluireExcluirOperacao = () => {
     },
     {
       title: 'Data de Solicitação',
-      dataIndex: 'dtSolicitacao',
-      key: 'dtSolicitacao',
+      dataIndex: 'dataSolicitacao',
+      key: 'dataSolicitacao',
     },
     {
       title: 'Solicitante',
@@ -459,8 +461,8 @@ const IncluireExcluirOperacao = () => {
     },
     {
       title: 'STATUS',
-      dataIndex: 'STATUS',
-      key: 'STATUS',
+      dataIndex: 'statusFaturamento',
+      key: 'statusFaturamento',
     },
     {
       title: 'NF',
@@ -522,7 +524,7 @@ const IncluireExcluirOperacao = () => {
           <Form.Item label="Solicitante" name="solicitante">
             <Input />
           </Form.Item>
-          <Form.Item label="Data de Solicitação" name="dtSolicitacao">
+          <Form.Item label="Data de Solicitação" name="dataSolicitacao">
             <DatePicker />
           </Form.Item>          
           <Form.Item label="Cliente" name="cliente">
@@ -531,7 +533,7 @@ const IncluireExcluirOperacao = () => {
           <Form.Item label="CNPJ" name="cnpj">
             <Input />
           </Form.Item>
-          <Form.Item label="Data de Início" name="dtInicio">
+          <Form.Item label="Data de Início" name="dataInicio">
             <DatePicker />
           </Form.Item>
           <Form.Item label="Grupo" name="grupo">
