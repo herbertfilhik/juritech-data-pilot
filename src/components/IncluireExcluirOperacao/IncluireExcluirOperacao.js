@@ -50,8 +50,10 @@ const IncluireExcluirOperacao = () => {
         nome: registroAtual.nome,
         dados: {
           "Controle Target": registroAtual.controleTarget,
-          "Data de Solicitação": registroAtual.dtSolicitacao ? { "$date": registroAtual.dtSolicitacao } : null,
-          "Data de Início": registroAtual.dtInicio ? { "$date": registroAtual.dtInicio } : null,
+          //"Data de Solicitação": registroAtual.dtSolicitacao ? registroAtual.dtSolicitacao.format('YYYY-MM-DDTHH:mm:ss[Z]') : null,
+          "Data de Solicitação": registroAtual.dtSolicitacao ? registroAtual.dtSolicitacao.toISOString() : null,
+          //"Data de Início": registroAtual.dtInicio ? registroAtual.dtInicio.format('YYYY-MM-DDTHH:mm:ss[Z]') : null,
+          "Data de Início": registroAtual.dtInicio ? registroAtual.dtInicio.toISOString() : null,
           "Solicitante": registroAtual.solicitante,
           "Grupo": registroAtual.grupo,
           "Cliente": registroAtual.cliente,
@@ -67,13 +69,15 @@ const IncluireExcluirOperacao = () => {
           "Serviço": registroAtual.servico,
           "SLA": registroAtual.sla,
           "Cumprimento de SLA": registroAtual.cumprimentoSLA,
-          "Data do Protocolo": registroAtual.dataProtocolo ? { "$date": registroAtual.dataProtocolo } : null,
+          //"Data do Protocolo": registroAtual.dataProtocolo ? registroAtual.dataProtocolo.format('YYYY-MM-DDTHH:mm:ss[Z]') : null,
+          "Data do Protocolo": registroAtual.dataProtocolo ? registroAtual.dataProtocolo.toISOString() : null,
           "Protocolo": registroAtual.protocolo,
           "Registro": registroAtual.registro,
           "Status": registroAtual.status,
           "MÊS": registroAtual.mes,
           "Período Processual": registroAtual.periodoProcessual,
-          "Data de Finalização": registroAtual.dataFinalizacao ? { "$date": registroAtual.dataFinalizacao } : null,
+          //"Data de Finalização": registroAtual.dataFinalizacao ? registroAtual.dataFinalizacao.format('YYYY-MM-DDTHH:mm:ss[Z]') : null,
+          "Data de Finalização": registroAtual.dataFinalizacao ? registroAtual.dataFinalizacao.toISOString() : null,
           "STATUS": registroAtual.statusFaturamento,
           "NF": registroAtual.nf
         },
@@ -84,10 +88,22 @@ const IncluireExcluirOperacao = () => {
       const response = await axios.post(`${baseURL}/api/createDocument`, payload);
   
       if (response.status === 201) {
-        // Se a criação foi bem-sucedida, adicione o novo registro à lista de registros
-        setDados([...dados, response.data]);
+        // Se a criação foi bem-sucedida, adicione o novo registro à lista de registros   
         message.success('Registro criado com sucesso!');
+
+        // Atualizar a lista de registros no estado 'dados'     
+        //setDados([...dados, response.data]);
+        setDados(prevDados => [...prevDados, response.data]);
+
+        // Fechar o modal
         setIsModalVisible(false);
+
+        // Limpar o estado do registro atual para que o modal esteja limpo da próxima vez que for aberto
+        setRegistroAtual(null);        
+
+        // Realizar recarregamento da página para atualizar a tabela
+        // window.location.reload();
+
       } else {
         message.error('Não foi possível criar o registro.');
       }
@@ -112,8 +128,10 @@ const IncluireExcluirOperacao = () => {
         nome: registroAtual.nome, // assumindo que este campo exista no seu estado
         dados: {
           "Controle Target": registroAtual.controleTarget,
-          "Data de Solicitação": registroAtual.dtSolicitacao ? { "$date": registroAtual.dtSolicitacao } : null,
-          "Data de Início": registroAtual.dtInicio ? { "$date": registroAtual.dtInicio } : null,
+          //"Data de Solicitação": registroAtual.dtSolicitacao ? { "$date": registroAtual.dtSolicitacao } : null,
+          "Data de Solicitação": registroAtual.dtSolicitacao ? registroAtual.dtSolicitacao.toISOString() : null,
+          //"Data de Início": registroAtual.dtInicio ? { "$date": registroAtual.dtInicio } : null,
+          "Data de Início": registroAtual.dtInicio ? registroAtual.dtInicio.toISOString() : null,
           "Solicitante": registroAtual.solicitante,
           "Grupo": registroAtual.grupo,
           "Cliente": registroAtual.cliente,
@@ -129,13 +147,15 @@ const IncluireExcluirOperacao = () => {
           "Serviço": registroAtual.servico,
           "SLA": registroAtual.sla,
           "Cumprimento de SLA": registroAtual.cumprimentoSLA,
-          "Data do Protocolo": registroAtual.dataProtocolo ? { "$date": registroAtual.dataProtocolo } : null,
+          //"Data do Protocolo": registroAtual.dataProtocolo ? { "$date": registroAtual.dataProtocolo } : null,
+          "Data do Protocolo": registroAtual.dataProtocolo ? registroAtual.dataProtocolo.toISOString() : null,
           "Protocolo": registroAtual.protocolo,
           "Registro": registroAtual.registro,
           "Status": registroAtual.status,
           "MÊS": registroAtual.mes,
           "Período Processual": registroAtual.periodoProcessual,
-          "Data de Finalização": registroAtual.dataFinalizacao ? { "$date": registroAtual.dataFinalizacao } : null,
+          //"Data de Finalização": registroAtual.dataFinalizacao ? { "$date": registroAtual.dataFinalizacao } : null,
+          "Data de Finalização": registroAtual.dataFinalizacao ? registroAtual.dataFinalizacao.toISOString() : null,
           "STATUS": registroAtual.statusFaturamento,
           "NF": registroAtual.nf
         },
@@ -502,6 +522,9 @@ const IncluireExcluirOperacao = () => {
           <Form.Item label="Solicitante" name="solicitante">
             <Input />
           </Form.Item>
+          <Form.Item label="Data de Solicitação" name="dtSolicitacao">
+            <DatePicker />
+          </Form.Item>          
           <Form.Item label="Cliente" name="cliente">
             <Input />
           </Form.Item>
