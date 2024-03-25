@@ -18,6 +18,21 @@ const IncluireExcluirOperacao = () => {
   const environment = process.env.REACT_APP_ENVIRONMENT;
   const baseURL = environment === "DEV" ? process.env.REACT_APP_DEV : process.env.REACT_APP_PRD;  
 
+  const handleCreate = async () => {
+    try {
+      // Aqui você irá coletar os dados do form para criar um novo registro
+      // E fazer a requisição POST para o servidor
+      // ...
+  
+      message.success('Registro criado com sucesso!');
+      setIsModalVisible(false);
+      // Atualizar a lista de registros aqui, se necessário
+    } catch (error) {
+      console.error('Erro ao criar o registro:', error);
+      message.error(`Erro ao criar o registro: ${error.message}`);
+    }
+  };
+
   // Função chamada quando o usuário clica no botão Salvar na modal
   const handleSave = async () => {
     console.log("Tentando salvar o registro com a chave:", registroAtual?.key);  
@@ -355,11 +370,14 @@ const IncluireExcluirOperacao = () => {
     <div className="incluireExcluirOperacao"> {/* Classe aplicada ao div container */}
       <h1>Manutenção de Serviço</h1>
       <Link to="/" className="voltarLink">Voltar à tela inicial</Link> {/* Classe aplicada ao Link */}
+      <Button key="newRegister" type="primary" onClick={handleCreate}> Criar Registro </Button>
+      <br />
       <Input
         placeholder="Filtrar por qualquer entrada"
         value={filtro}
         onChange={handleFilterChange}
       />
+      <br />
       <Table
         dataSource={dados}
         columns={columns}
