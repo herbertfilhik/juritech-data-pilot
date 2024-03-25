@@ -421,8 +421,8 @@ const IncluireExcluirOperacao = () => {
     },
     {
       title: 'Cumprimento de SLA',
-      dataIndex: 'cumprimentoSla',
-      key: 'cumprimentoSla',
+      dataIndex: 'cumprimentoSLA',
+      key: 'cumprimentoSLA',
     },
     {
       title: 'Data do Protocolo',
