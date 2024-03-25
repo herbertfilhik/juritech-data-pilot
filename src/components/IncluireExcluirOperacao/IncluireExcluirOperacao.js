@@ -20,11 +20,22 @@ const IncluireExcluirOperacao = () => {
   const environment = process.env.REACT_APP_ENVIRONMENT;
   const baseURL = environment === "DEV" ? process.env.REACT_APP_DEV : process.env.REACT_APP_PRD;  
 
+  const generateRandomTargetControl = () => {
+    const randomNumber = Math.floor(Math.random() * 1000);
+    return `2.023.${randomNumber.toString().padStart(3, '0')}`;
+  };
+
   // Função para mostrar o modal em branco para um novo registro
   const handleNewRegister = () => {
-    setIsCreatingNew(true); // Estamos criando um novo registro
-    setRegistroAtual({}); // Inicialize um objeto vazio para o novo registro
-    setIsModalVisible(true); // Mostra o modal
+    const newRecord = {
+      // ... outros campos necessários inicializados
+      controleTarget: generateRandomTargetControl(),
+      // ... outros campos que você queira inicializar
+    };
+
+    setIsCreatingNew(true); // Estamos criando um novo registro    
+    setRegistroAtual(newRecord); // Atualiza o registroAtual com o novo objeto
+    setIsModalVisible(true); // Mostra o modal    
   };
 
   const handleCreate = async () => {
