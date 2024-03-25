@@ -87,15 +87,20 @@ const IncluireExcluirOperacao = () => {
   };
 
   // Função chamada quando o usuário clica no botão Excluir na modal
-  const handleDelete = async () => {
+  const handleDelete = async (id) => {
     try {
-      // Aqui você faria a chamada API para excluir o registro
-      await axios.delete(`/api/caminho/${registroAtual.key}`);
-      // Atualize o estado se necessário e feche a modal
-      setIsModalVisible(false);
+      const response = await axios.delete(`${baseURL}/api/saveRegister/delete/${id}`);
+  
+      if (response.status === 200) {
+        // Atualize o estado para refletir a exclusão do registro
+        setDados(dados.filter(item => item.key !== id));
+        message.success('Registro excluído com sucesso!');
+      } else {
+        message.error('Não foi possível excluir o registro.');
+      }
     } catch (error) {
       console.error('Erro ao excluir:', error);
-      // Trate o erro como achar melhor
+      message.error(`Erro ao excluir o registro: ${error.message}`);
     }
   };
   
