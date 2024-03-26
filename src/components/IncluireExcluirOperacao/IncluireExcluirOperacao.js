@@ -193,6 +193,8 @@ const IncluireExcluirOperacao = () => {
       if (response.status === 200) {
         // Atualize o estado para refletir a exclusão do registro
         setDados(dados.filter(item => item.key !== id));
+        // Fechar o modal
+        setIsModalVisible(false);
         message.success('Registro excluído com sucesso!');
       } else {
         message.error('Não foi possível excluir o registro.');
