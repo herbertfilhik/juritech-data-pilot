@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Dashboard.css';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 const Dashboard = () => {
     const environment = process.env.REACT_APP_ENVIRONMENT;
@@ -10,38 +9,32 @@ const Dashboard = () => {
 
     const [data, setData] = useState([]);
 
-    // Simulação de busca de dados
     useEffect(() => {
-        // Substitua o URL pelo endpoint específico do seu backend
         fetch(`${baseURL}/api/data`)
-        .then(response => response.json())
-        .then(data => setData(data))
-        .catch(error => console.log(error));
-    }, []);
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro na rede, resposta não ok');
+                }
+                return response.json();
+            })
+            .then(data => setData(data))
+            .catch(error => console.log(error));
+    }, [baseURL]);
 
     return (
         <div className="dashboard-container">
             <h2>Dashboard da Operação</h2>
             <div className="dashboard-content">
+                {/* Exibir total de registros */}
                 <p>Quantidade de registros: {data.length}</p>
-                <LineChart
-                    width={500}
-                    height={300}
-                    data={data}
-                    margin={{
-                        top: 5,
-                        right: 30,
-                        left: 20,
-                        bottom: 5,
-                    }}
-                >
+                {/* Gráfico de barras */}
+                <BarChart width={600} height={300} data={[{nomeDoSeuCampoX: 'Total de Registros', nomeDoSeuCampoY: 4951}, {nomeDoSeuCampoX: 'Total de Concluídos', nomeDoSeuCampoY: 1000}]}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="nomeDoSeuCampoX" />
                     <YAxis />
                     <Tooltip />
-                    <Legend />
-                    <Line type="monotone" dataKey="nomeDoSeuCampoY" stroke="#8884d8" activeDot={{ r: 8 }} />
-                </LineChart>
+                    <Bar dataKey="nomeDoSeuCampoY" fill="#8884d8" />
+                </BarChart>
             </div>
             <div className="dashboard-navigation">
                 <Link to="/" className="btn btn-primary">Voltar para o início</Link>
