@@ -17,6 +17,7 @@ function Home() {
     <div className="home-container">
       <h1>Bem-vindo ao JuriTech - Data Pilot</h1>
       <Link href="/" className="btn btn-primary link-vertical" style={{ pointerEvents: 'none' }}>Menu</Link>
+      <Link to="/dashboard" className="btn btn-primary link-vertical">Dashboard da Operação</Link>
       <Link to="/upload" className="btn btn-primary link-vertical">Realizar Upload da Operação</Link>
       <Link to="/fluxo" className="btn btn-primary link-vertical">Acompanhar Serviço</Link>
       <Link to="/incluir-excluir" className="btn btn-primary link-vertical">Manutenção de Serviço</Link> {/* Nova opção adicionada */}      

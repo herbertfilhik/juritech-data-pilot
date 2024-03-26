@@ -8,6 +8,7 @@ import ExcluirTabelaOperacao from '../Exclusao/ExcluirTabelaOperacao.js'; // Aju
 import Login from '../Login/Login.js';
 import Logout from '../Logout/Logout.js';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.js'
+import Dashboard from '../Dashboard/Dashboard.js';
 
 function App() {
   return (
@@ -16,11 +17,10 @@ function App() {
         <Route path="/login" element={<Login />} />        
         <Route element={<ProtectedRoute />}>
           <Route path="/" element={<Home />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/upload" element={<UploadForm />} />
           <Route path="/fluxo" element={<AcompanhamentoServico />} />
-          
           <Route path="/incluir-excluir" element={<IncluireExcluirOperacao />} />
-
           <Route path="/excluiracompservico" element={<ExcluirTabelaOperacao />} />        
           <Route path="/logout" element={<Logout />} />
           {/* Defina outras rotas conforme necessário */}
